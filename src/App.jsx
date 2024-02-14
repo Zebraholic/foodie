@@ -1,58 +1,78 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import useContentful from './hooks/use-contenful.js'
+import Person from './components/person.jsx'
+import Bookmarks from './components/bookmarks.jsx'
+import DogToys from './components/dogtoy.jsx';
+import './styles.css'; 
 import './App.css'
 
 const query = `
-{
-  pageCollection {
+query {
+  person(id: "2mHXoedlQc5VGfSu1toZSr") {
+    name
+    socialGithub
+    socialLinkedin
+    topicTitle
+    bio {
+      json
+    }
+    avatar {
+      url
+    }
+    image {
+      url
+    }
+  }
+  bookmarkCollection {
     items {
+      sys {
+        id
+      }
       title
-      logo {
-        url
+      url
+      comment
+      tagsCollection {
+        items {
+          title
+        }
       }
     }
   }
+  dogToyCollection {
+    total
+    items {
+      sys {
+        id
+      }
+      toyName
+      estimatedPrice
+      linkToBuy
+      image {
+        url
+      }
+    }
+  }  
 }
 `
 
 function App() {
-  const [page, setPage] = useState(null);
+  let {data, errors} = useContentful(query)
 
-  useEffect(() => {
-    window
-      .fetch(`https://graphql.contentful.com/content/v1/spaces/${import.meta.env.VITE_CONTENTFUL_SPACE_ID}/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Authenticate the request
-          Authorization: `Bearer ${import.meta.env.VITE_CONTENTFUL_AUTH_TOKEN}`,
-        },
-        // send the GraphQL query
-        body: JSON.stringify({ query }),
-      })
-      .then((response) => response.json())
-      .then(({ data, errors }) => {
-        if (errors) {
-          console.error(errors);
-        }
-
-        // rerender the entire component with new data
-        setPage(data.pageCollection.items[0]);
-      });
-  }, []);
-
-  if (!page) {
+  // handle errors
+  if (errors) {
+    return <span style={{color: "red"}}>{errors.map(error => error.message).join(", ")}</span>
+  }
+  if (!data) {
     return "Loading...";
   }
 
+const {bookmarkCollection, person, dogToyCollection} = data;
+
   // render the fetched Contentful data
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={page.logo.url} className="App-logo" alt="logo" />
-        <p>{page.title}</p>
-      </header>
+    <div className="sm:text-center">
+        <Person person={person} />
+        <Bookmarks bookmarks={bookmarkCollection.items} headline="My Bookmarks"/> 
+        <DogToys dogToys={dogToyCollection.items}/>   
     </div>
   );
   
