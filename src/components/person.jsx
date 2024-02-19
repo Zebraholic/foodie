@@ -35,8 +35,8 @@ function Person({ person }) {
 
     return (
         <>
-        <div className="max-w-2xl mb-8 overflow-hidden bg-white rounded-lg shadow-md bg-slate-200">
-                <img className="object-cover w-full h-64" src={image.url} alt={image.url} />
+        <div className="max-w-4xl mx-auto mb-8 overflow-hidden bg-white rounded-lg shadow-md bg-slate-200">
+                <img className="object-cover w-full h-80" src={image.url} alt={image.url} />
 
                     <div className="p-6">
                         <div>

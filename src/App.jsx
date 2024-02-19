@@ -1,9 +1,10 @@
 import useContentful from './hooks/use-contenful.js'
-import Person from './components/person.jsx'
-import Bookmarks from './components/bookmarks.jsx'
-import DogToys from './components/dogtoy.jsx';
+import Person from './components/Person.jsx'
+import DogToys from './components/DogToy.jsx'
+import Bookmarks from './components/Bookmarks.jsx'
 import './styles.css'; 
 import './App.css'
+import NavHeader from './components/NavHeader.jsx';
 
 const query = `
 query {
@@ -54,6 +55,7 @@ query {
 }
 `
 
+
 function App() {
   let {data, errors} = useContentful(query)
 
@@ -65,14 +67,15 @@ function App() {
     return "Loading...";
   }
 
-const {bookmarkCollection, person, dogToyCollection} = data;
+  const {bookmarkCollection, person, dogToyCollection} = data;
 
   // render the fetched Contentful data
   return (
     <div className="sm:text-center">
-        <Person person={person} />
-        <Bookmarks bookmarks={bookmarkCollection.items} headline="My Bookmarks"/> 
-        <DogToys dogToys={dogToyCollection.items}/>   
+      <NavHeader />
+      <Person person={person} />
+      <Bookmarks bookmarks={bookmarkCollection.items} headline="My Bookmarks"/> 
+      <DogToys dogToys={dogToyCollection.items}/>   
     </div>
   );
   
