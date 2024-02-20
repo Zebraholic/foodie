@@ -1,6 +1,6 @@
 import NavHeader from '../components/NavHeader.jsx'
 import useContentful from '../hooks/use-contenful.js'
-import Bookmarks from '../components/Bookmarks.jsx'
+import Bookmarks from '../components/bookmarks.jsx'
 
 
 const query = `

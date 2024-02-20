@@ -1,7 +1,7 @@
 import useContentful from './hooks/use-contenful.js'
-import Person from './components/Person.jsx'
-import DogToys from './components/DogToy.jsx'
-import Bookmarks from './components/Bookmarks.jsx'
+import Person from './components/person.jsx'
+import DogToys from './components/dogtoy.jsx'
+import Bookmarks from './components/bookmarks.jsx'
 import './styles.css'; 
 import './App.css'
 import NavHeader from './components/NavHeader.jsx';
